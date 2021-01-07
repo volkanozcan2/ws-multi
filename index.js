@@ -15,13 +15,15 @@ const io = require('socket.io')(server);
 
 io.sockets.on('connection',
     function (socket) {
+        const c = "#" + ((1 << 24) * Math.random() | 0).toString(16);
         const name = Math.random().toString(36).substring(7);
         log(name + " geldi")
         const { id } = socket;
         users[id] = name;
 
         socket.on("move", (e) => {
-            socket.broadcast.emit("pos", { id, ...e });
+
+            socket.broadcast.emit("pos", { id, ...e, c });
         })
         socket.on("disconnect", (e) => {
             log(users[id], " gitti");

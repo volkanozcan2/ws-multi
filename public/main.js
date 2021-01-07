@@ -5,8 +5,8 @@ socket.on("connect", () => {
     log("bağlandım");
 });
 socket.on("pos", (e) => {
-    const { id, x, y } = e
-    users[id] = { x, y, id }
+    const { id, x, y, c } = e
+    users[id] = { x, y, id, c }
 });
 socket.on("del", (e) => {
     delete users[e.id];
@@ -24,8 +24,9 @@ function draw() {
     background("grey");
     ellipse(mouseX, mouseY, 30);
     for (var i in users) {
-        const pos = users[i]
-        ellipse(pos.x, pos.y, 30);
+        const obj = users[i];
+        fill(obj.c);
+        ellipse(obj.x, obj.y, 30);
     }
 }
 function mouseMoved() {
